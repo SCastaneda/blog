@@ -8,7 +8,8 @@ var blogSchema  = new Schema({
     styling:     Schema.Types.ObjectId,
     url:         String,
     date_posted: Date,
-    posted:      Boolean
+    posted:      Boolean,
+    category:    String
 });
 
 // styles will allow for custom styling per draft/post
@@ -62,12 +63,13 @@ exports.deleteStyle = function(id, cb) {
     
 };
 
-exports.newDraft = function(title, content, styling, cb) {
-    var draft     = new blogModel();
-    draft.title   = title;
-    draft.content = content;
-    draft.styling = styling;
-    draft.posted  = false;
+exports.newDraft = function(title, content, styling, category, cb) {
+    var draft      = new blogModel();
+    draft.title    = title;
+    draft.content  = content;
+    draft.styling  = styling;
+    draft.posted   = false;
+    draft.category = category;
 
     generateUrl(title, (new Date()), function(url) {
         draft.url = url;
@@ -78,10 +80,11 @@ exports.newDraft = function(title, content, styling, cb) {
     }); 
 };
 
-exports.updateDraft = function(id, title, content, styling, cb) {
+exports.updateDraft = function(id, title, content, styling, category, cb) {
     generateUrl(title, (new Date()), function(url) {
 
-        blogModel.update({_id: id}, {title: title, content: content, styling: styling, url},
+        blogModel.update({_id: id}, 
+            {title: title, content: content, styling: styling, url: url, category:category},
             function(err, numAffected, raw) {
                 return cb(url);
         });

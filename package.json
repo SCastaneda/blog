@@ -5,10 +5,18 @@
   "scripts": {
     "start": "node app.js"
   },
+  "style": "public/stylesheets/style.css",
+  "less": "public/less/main.less",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-watch": "*"
+  },
   "dependencies": {
     "express": "3.4.8",
+    "express-partials": "0.2.*",
     "ejs": "*",
-    "less-middleware": "*",
+    //"less-middleware": "*",
     "mongoose": "3.8.*",
     "markdown": "0.5.*"
   }
