@@ -1,124 +1,99 @@
-var mongoose           = require('mongoose');
-var db                 = mongoose.connect('mongodb://localhost/blog');
-var Schema             = mongoose.Schema;
+var connect  = require('./connect');
+var mongoose = connect.mongoose;
+var Schema   = connect.schema;
 
-var blogSchema  = new Schema({
-    title:       String,
-    content:     String,
-    styling:     Schema.Types.ObjectId,
-    url:         String,
-    date_posted: Date,
-    posted:      Boolean,
-    category:    String
+var draftSchema  = new Schema({
+  title:       String,
+  content:     String,
+  styling:     Schema.Types.ObjectId,
+  url:         String,
+  date_posted: Date,
+  posted:      Boolean,
+  category:    String
 });
 
-// styles will allow for custom styling per draft/post
-var stylingSchema = new Schema({
-    name:    String,
-    content: String
-});
+var draftModel   = mongoose.model('drafts', draftSchema);
 
-var blogModel    = mongoose.model('blog', blogSchema);
-var stylingModel = mongoose.model('styling', stylingSchema);
-
-exports.getStyle = function(id, cb) {
-    stylingModel.findOne({_id: id}, function(err, style) {
-        if(err) { throw err; }
-        return cb(style);
-    });
+// can list posted, or unposted ones
+exports.listDrafts = function(posted, cb) {
+  draftModel.find({posted: posted}, function(err, drafts) {
+    if(err) { throw err; }
+    return cb(drafts);
+  });
 };
 
-exports.newStyle = function(name, content, cb) {
-    var style     = new stylingModel();
-    style.name    = name;
-    style.content = content;
-
-    style.save(function(err, style) {
-        if(err) { throw err; }
-        return cb(style);
-    });
-};
-
-exports.updateStyle = function(id, name, content, cb) {
-    stylingModel.findOne({_id: id}, {name: name, content: content}, 
-        function(err, numAffected, raw){
-            if(err) { throw err; }
-            return cb(true);
-    });
-};
-
-// only delete if there are no posts depending on the style
-exports.deleteStyle = function(id, cb) {
-    blogModel.find({styling: id}, function(err, drafts) {
-        if(drafts.length > 0) {
-            return cb(false, "can't delete, drafts depending on styles", drafts);
-        } else {
-            stylingModel.findByIdAndRemove(id, function(err) {
-                if(err) { throw err; }
-                return cb(true, "style deleted successfully");
-            });
-        }
-    });
-
-    
+exports.listAll = function(cb) {
+  draftModel.find({}, function(err, drafts) {
+    if(err) { throw err; }
+    return cb(drafts);
+  });
 };
 
 exports.newDraft = function(title, content, styling, category, cb) {
-    var draft      = new blogModel();
-    draft.title    = title;
-    draft.content  = content;
-    draft.styling  = styling;
-    draft.posted   = false;
-    draft.category = category;
+  var draft      = new draftModel();
+  draft.title    = title;
+  draft.content  = content;
+  draft.styling  = styling;
+  draft.posted   = false;
+  draft.category = category;
 
-    generateUrl(title, (new Date()), function(url) {
-        draft.url = url;
-        draft.save(function(err, draft) {
-            if(err) { throw err; }
-            return cb(draft.url);
-        });
-    }); 
+  draft.save(function(err, draft) {
+    if(err) { throw err; }
+    return cb(draft._id);
+  });
 };
 
-exports.updateDraft = function(id, title, content, styling, category, cb) {
-    generateUrl(title, (new Date()), function(url) {
+exports.getDraftById = function(id, cb) {
+  draftModel.findOne({_id: id}, function(err, draft) {
+    if(err) { throw err; }
+    return cb(draft);
+  });
+};
 
-        blogModel.update({_id: id}, 
-            {title: title, content: content, styling: styling, url: url, category:category},
-            function(err, numAffected, raw) {
-                return cb(url);
-        });
-    }); 
+exports.updateDraft = function(draft_id, title, content, styling, category, cb) {
+  draftModel.update({ _id: draft_id },
+    {title: title, content: content, styling: styling, category: category}, function(err, numAffected, raw) {
+    //console.log(raw);
+    if(err) { throw err; }
+    return cb(draft_id);
+  });
 };
 
 exports.deleteDraft = function(id, cb) {
-    blogModel.findOne({_id: id}, function(err, draft) {
-        if(!draft.posted) {
-            blogModel.findByIdAndRemove(id, function(err) {
-                return cb(true, "Draft was deleted successfully!");
-            });
-        } else {
-            return cb(false, "Can't delete draft, already posted!");
-        }
-    });
+  draftModel.findOne({_id: id}, function(err, draft) {
+    if(!draft.posted) {
+      draftModel.findByIdAndRemove(id, function(err) {
+        return cb(true, "Draft was deleted successfully!");
+      });
+    } else {
+      return cb(false, "Can't delete draft, already posted!");
+    }
+  });
 };
 
 exports.publishDraft = function(id, cb) {
-    blogModel.update({_id: id}, {posted: true, date_posted: (new Date())}, function(err, numAffected, raw) {
+  draftModel.findOne({_id:id}, function(err, draft) {
+    generateUrl(draft.title, (new Date()), function(url) {
+      draftModel.update({_id: id}, {posted: true, date_posted: new Date(), url: url}, function(err, numAffected, raw) {
         if(err) { throw err; }
         cb(url);
+      });
     });
+  });
 };
 
-exports.getPostByUrl = function(url, cb) {
-    blogModel.findOne({url: url}, function(err, post) {
-        if(err) { throw err; }
-        return cb(post);
-    });
+exports.getDraftByUrl = function(url, cb) {
+  draftModel.findOne({url: url}, function(err, draft) {
+    if(err) { throw err; }
+    return cb(draft);
+  });
 };
 
-// appends the year makes all lowercase, and replaces whitespace with '-' 
+// appends the year makes all lowercase, and replaces whitespace with '-'
 function generateUrl(title, date, cb) {
-    var url = (title.length > 40 ? title.substr(0,10) : title);
-    return (url + " " + date.getFullYear()).toLowerCase().replace(/\s/g, "-");
+
+  var url = (title.length > 40 ? title.substr(0,10) : title);
+  url = (url + " " + date.getFullYear()).toLowerCase().replace(/\s/g, "-");
+  console.log("Generated URL: " + url);
+  return cb(url);
 }

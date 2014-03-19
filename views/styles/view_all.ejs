@@ -1,0 +1,7 @@
+Number of Styles: <%= styles.length %>
+<hr>
+
+<%  styles.forEach(function(style) { %>
+        Name: <a href="/style/<%= style._id %>"><%= style.name %></a>
+        <hr>
+<%  }); %>

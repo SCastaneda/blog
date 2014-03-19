@@ -1,2 +1,49 @@
-this will be where we edit blogs
+<form id="draft-editor" action="/save-draft" method="post">
+    <input type="text" name="title" value="<%= (typeof draft !== 'undefined' ? draft.title : '') %>">
+    <hr>
+    <textarea name="content"><%= (typeof draft !== 'undefined' ? draft.content : '') %></textarea>
+    <input type="hidden" value="<%= (typeof draft !== 'undefined' ? draft._id : '') %>" name="draft_id">
+    <select name="style">
+    <%  for(var i = 0; i < styles.length; i++) { %>
+        <option value="<%= styles[i]._id %>"><%= styles[i].name %></option>
+    <%  } %>
+    </select>
+    <select name="category">
+    <%  for(var i = 0; i < categories.length; i++) { %>
+        <option value="<%= categories[i] %>"><%= categories[i] %></option>
+    <%  } %>
+    </select>
+    <input type="submit" value="Save Draft">
+</form>
 
+<% if(typeof draft !== 'undefined') { %>
+<button onclick="deleteDraft()">Delete Draft</button>
+  <% if(!draft.posted) { %>
+       <button onclick="publishDraft()">Publish Draft</button><br>
+  <% } %>
+
+<% } %>
+<script type="text/javascript">
+function deleteDraft() {
+  $.ajax({
+    type: "POST",
+    url: "/delete-draft",
+    data: { id: "<%= (typeof draft !== 'undefined' ? draft._id : 'null') %>" },
+    dataType: 'json'
+  }).done(function(data) {
+    window.location.replace("/");
+  });
+}
+
+function publishDraft() {
+  $.ajax({
+    type: "POST",
+    url: "/publish",
+    data: { id: "<%= (typeof draft !== 'undefined' ? draft._id : 'null') %>" },
+    dataType: 'json'
+  }).done(function(data) {
+    window.location.replace("/");
+  });
+}
+
+</script>

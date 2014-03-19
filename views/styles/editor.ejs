@@ -1,1 +1,7 @@
-This will hold the styles editor.
+<form id="style-editor" action="/save-style" method="post">
+  <input type="text" name="name" value="<%= (typeof style !== 'undefined' ? style.name : '') %>">
+  <hr>
+  <textarea name="content"><%= (typeof style !== 'undefined' ? style.content : '') %></textarea>
+  <input type="hidden" name="id" value="<%= (typeof style !== 'undefined' ? style._id : '') %>">
+  <input type="submit" value="Save">
+</form>
