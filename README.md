@@ -2,7 +2,8 @@ Blog written in Node.js for markdown and custom stylesheets
 
 
 TODO:
-add markdown
-add preview of drafts
-style it
-add login/sessions
+
+1. add markdown
+2. add preview of drafts
+3. style it
+4. add login/sessions
