@@ -33,7 +33,7 @@ exports.save = function(req,res) {
         });
 
     } else {
-        styles_db.updateStyle(name, content, function(saved) {
+        styles_db.updateStyle(id, name, content, function(saved) {
           req.session.meessage = "Style saved";
           res.redirect('/view-styles');
         });

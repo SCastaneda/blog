@@ -1,9 +1,12 @@
 <style type="text/css">
 <%= styling %>
 </style>
+<div id="post">
+  <div id="title"><%= draft.title %></div>
+  <div id="date_posted"><%= draft.date_posted %></div>
 
-<h3><%= draft.title %></h3>
-<%= draft.date_posted %>
-
-<hr>
-<%= draft.content %>
+  <hr>
+  <div id="post_content">
+  <%= draft.content %>
+  </div>
+</div>
