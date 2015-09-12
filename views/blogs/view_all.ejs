@@ -5,7 +5,7 @@ Total Blogs: <%= drafts.length %>
     drafts.forEach(function(draft) { %>
     <a href="/edit/<%= draft._id %>"><%= draft.title %></a><br>
     <span><%= (typeof draft.date_posted !== "undefined" ? "Posted on: " + draft.date_posted : "Not Posted") %></span><br>
-    <p><%= (draft.content >= 50 ? draft.content.substr(0, 47) + "..." : draft.content) %></p>
+    <p><%- (draft.content >= 50 ? draft.content.substr(0, 47) + "..." : draft.content) %></p>
     <hr>
 <%  });
 %>
