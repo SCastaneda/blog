@@ -1,21 +1,36 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sams Blog</title>
+        <title>Samuel Castaneda</title>
         <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
-        <script src="/javascripts/jquery-1.11.0.min.js" type="text/javascript"></script>
+        <script src="/javascripts/jquery-2.1.4.min.js" type="text/javascript"></script>
     </head>
     <body>
-        <div id="flash-message"><%= (typeof message !== 'undefined' ? message : '')%></div>
+        <header>
+            
+                <h1><a href="/">Sam Castaneda</a></h1>
+                <p>tag line</p>
+            
+        </header>
         <a href="/">Home</a>
-        <a href="/view-drafts">View Drafts</a>
-        <a href="/view-styles">View Styles</a>
-        <a href="/edit">New Draft</a>
-        <a href="/style">New Style</a>
-        <hr>
+        <div id="flash-message"><%= (typeof message !== 'undefined' ? message : '')%></div>
+        
         <%- body %>
+        
+        <footer>
+            <a href="/view-drafts">View Drafts</a>
+            <a href="/view-styles">View Styles</a>
+            <a href="/edit">New Draft</a>
+            <a href="/style">New Style</a>
+        </footer>
 
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <script src="/javascripts/bootstrap.min.js" type="text/javascript"></script>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </body>
 </html>
