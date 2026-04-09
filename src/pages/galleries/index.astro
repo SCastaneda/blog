@@ -74,37 +74,57 @@ const galleries = rawGalleries
         </p>
         <div class="mt-4 flex flex-wrap items-center gap-2">
           <span class="hero-badge"
-            >{galleries.length}
-            {galleries.length === 1 ? "gallery" : "galleries"}</span
+            >{galleries.length + 1}
+            {galleries.length + 1 === 1 ? "gallery" : "galleries"}</span
           >
         </div>
       </div>
     </div>
 
     <!-- Gallery grid -->
-    {
-      galleries.length === 0 ? (
-        <p class="mt-12 text-center text-foreground/50 italic">
-          No galleries published yet.
-        </p>
-      ) : (
-        <ul
-          class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          role="list"
+    <ul
+      class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+      role="list"
+    >
+      {galleries.map(({ gallery, slug, fallbackImage, imageCount }) => (
+        <li>
+          <GalleryCard
+            gallery={gallery}
+            slug={slug}
+            fallbackImage={fallbackImage}
+            imageCount={imageCount}
+          />
+        </li>
+      ))}
+      <!-- Hardcoded gallery: sons-first-year (uses external images) -->
+      <li>
+        <a
+          href="/galleries/sons-first-year"
+          class="card-glow group/card relative flex flex-col overflow-hidden rounded-2xl border border-border/25 backdrop-blur-sm bg-linear-to-br from-accent/5 via-muted/10 to-transparent transition-all duration-300 ease-out hover:border-accent/30 hover:from-accent/10 hover:via-muted/20 hover:to-transparent hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/10"
         >
-          {galleries.map(({ gallery, slug, fallbackImage, imageCount }) => (
-            <li>
-              <GalleryCard
-                gallery={gallery}
-                slug={slug}
-                fallbackImage={fallbackImage}
-                imageCount={imageCount}
-              />
-            </li>
-          ))}
-        </ul>
-      )
-    }
+          <div class="gallery-card-cover relative aspect-video w-full overflow-hidden bg-foreground/5">
+            <img
+              src="http://photo.sam-the-man.com/photos/2013-03-22-1363927624week0.jpg"
+              alt="My son's first year"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover/card:scale-105"
+              loading="lazy"
+            />
+            <span class="absolute end-2 bottom-2 rounded-full bg-background/80 px-2 py-0.5 text-xs font-medium backdrop-blur-sm">
+              52 photos
+            </span>
+          </div>
+          <div class="relative z-5 flex flex-1 flex-col gap-1.5 p-4 sm:p-5">
+            <h2 class="line-clamp-2 text-lg font-semibold text-foreground transition-colors duration-200 group-hover/card:text-accent">
+              My son's first year
+            </h2>
+            <span class="text-xs text-foreground/60 font-cartograph">Dec 2013</span>
+            <p class="mt-1 line-clamp-2 text-sm leading-relaxed opacity-65">
+              A picture every week from my son's first year
+            </p>
+          </div>
+        </a>
+      </li>
+    </ul>
   </main>
   <Footer />
 </Layout>

@@ -13,7 +13,7 @@ import LinkButton from "./LinkButton.astro";
     SOCIALS.map(social => (
       <LinkButton
         href={social.href}
-        class="p-2 hover:rotate-6 sm:p-1"
+        class="social-link p-2 sm:p-1"
         title={social.linkTitle}
         target="_blank"
         rel="noopener noreferrer"
@@ -24,3 +24,22 @@ import LinkButton from "./LinkButton.astro";
     ))
   }
 </div>
+
+<style>
+  :global(.social-link) {
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  :global(.social-link:hover) {
+    transform: translateY(-2px) scale(1.1);
+    filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.6));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.social-link) {
+      transition: none;
+    }
+    :global(.social-link:hover) {
+      transform: none;
+      filter: none;
+    }
+  }
+</style>

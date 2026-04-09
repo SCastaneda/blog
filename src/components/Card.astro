@@ -24,40 +24,39 @@ const viewTransitionName = slugifyStr(String(title).replaceAll(".", "-"));
 
 <li
   class:list={[
-    "card-glow group/card relative my-3 rounded-2xl p-4 sm:p-5",
-    "border backdrop-blur-sm",
+    "card-glow group/card relative my-3 rounded-[10px] p-4 sm:p-5",
+    "border backdrop-blur-sm overflow-hidden",
     "transition-[border-color,background-color,box-shadow,transform] duration-300 ease-out motion-reduce:transform-none motion-reduce:transition-none",
-    "hover:-translate-y-0.5 focus-within:-translate-y-0.5",
-    "hover:shadow-lg focus-within:shadow-lg",
+    "hover:-translate-y-[3px] focus-within:-translate-y-[3px]",
 
     // Default posts styling
     !isGallery && !featured && [
-      "border-border/25 bg-muted/10",
-      "hover:border-accent/40 hover:bg-accent/5 focus-within:border-accent/40 focus-within:bg-accent/5",
-      "hover:shadow-accent/10 focus-within:shadow-accent/10",
+      "border-[rgba(108,78,246,0.15)] bg-[rgba(255,255,255,0.03)]",
+      "hover:border-[rgba(108,78,246,0.4)] hover:shadow-[0_8px_30px_rgba(108,78,246,0.12)]",
+      "focus-within:border-[rgba(108,78,246,0.4)] focus-within:shadow-[0_8px_30px_rgba(108,78,246,0.12)]",
     ],
 
     // Featured generic posts styling
     !isGallery && featured && [
-      "border-amber-500/30 bg-amber-500/5",
-      "hover:border-amber-500/50 hover:bg-amber-500/10 focus-within:border-amber-500/50 focus-within:bg-amber-500/10",
-      "hover:shadow-amber-500/10 focus-within:shadow-amber-500/10",
-      "shadow-[0_0_20px_-5px_rgba(245,158,11,0.15)]",
+      "border-[rgba(167,139,250,0.25)] bg-[rgba(167,139,250,0.04)]",
+      "hover:border-[rgba(167,139,250,0.5)] hover:shadow-[0_8px_30px_rgba(167,139,250,0.15)]",
+      "focus-within:border-[rgba(167,139,250,0.5)] focus-within:shadow-[0_8px_30px_rgba(167,139,250,0.15)]",
+      "shadow-[0_0_20px_-5px_rgba(167,139,250,0.15)]",
     ],
 
     // Gallery variant styling
     isGallery && !featured && [
-      "border-purple-500/20 bg-purple-500/5",
-      "hover:border-purple-500/40 hover:bg-purple-500/10 focus-within:border-purple-500/40 focus-within:bg-purple-500/10",
-      "hover:shadow-purple-500/10 focus-within:shadow-purple-500/10",
+      "border-[rgba(108,78,246,0.2)] bg-[rgba(108,78,246,0.04)]",
+      "hover:border-[rgba(108,78,246,0.4)] hover:shadow-[0_8px_30px_rgba(108,78,246,0.12)]",
+      "focus-within:border-[rgba(108,78,246,0.4)] focus-within:shadow-[0_8px_30px_rgba(108,78,246,0.12)]",
     ],
 
     // Featured gallery styling
     isGallery && featured && [
-      "border-purple-500/40 bg-purple-500/10",
-      "hover:border-purple-500/60 hover:bg-purple-500/15 focus-within:border-purple-500/60 focus-within:bg-purple-500/15",
-      "hover:shadow-purple-500/20 focus-within:shadow-purple-500/20",
-      "shadow-[0_0_20px_-5px_rgba(168,85,247,0.15)]",
+      "border-[rgba(108,78,246,0.35)] bg-[rgba(108,78,246,0.07)]",
+      "hover:border-[rgba(108,78,246,0.55)] hover:shadow-[0_8px_30px_rgba(108,78,246,0.2)]",
+      "focus-within:border-[rgba(108,78,246,0.55)] focus-within:shadow-[0_8px_30px_rgba(108,78,246,0.2)]",
+      "shadow-[0_0_20px_-5px_rgba(108,78,246,0.2)]",
     ],
   ]}
 >
@@ -117,11 +116,10 @@ const viewTransitionName = slugifyStr(String(title).replaceAll(".", "-"));
 
   .card-glow-effect {
     background: radial-gradient(
-      350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      color-mix(in oklab, var(--accent) 8%, transparent) 0%,
-      color-mix(in oklab, var(--accent) 4%, transparent) 30%,
-      color-mix(in oklab, var(--accent) 0.8%, transparent) 60%,
-      transparent 80%
+      160px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      color-mix(in oklab, var(--accent) 14%, transparent) 0%,
+      color-mix(in oklab, var(--accent) 7%, transparent) 40%,
+      transparent 70%
     );
     will-change: opacity;
   }

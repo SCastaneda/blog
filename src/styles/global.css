@@ -5,30 +5,43 @@
 
 :root,
 html[data-theme="light"] {
-  --background: #f2f5ec;
-  --foreground: #353538;
-  --accent: #1158d1;
-  --muted: #bbc789;
-  --border: #7cadff;
+  --background: #f0eff6;
+  --foreground: #1e1b2e;
+  --accent: #6d28d9;
+  --muted: rgba(30, 27, 46, 0.55);
+  --border: rgba(109, 40, 217, 0.2);
+  --accent-blue: #2563eb;
+  --accent-glow: #6d28d9;
+  --card-bg: rgba(255, 255, 255, 0.7);
 }
 
 html[data-theme="dark"] {
-  --background: #10131a;
-  --foreground: #f6f7f8;
-  --accent: #008fec;
-  --muted: #212f3f;
-  --border: #2264e3;
+  --background: #080b14;
+  --foreground: #e8eaf2;
+  --accent: #a78bfa;
+  --accent-blue: #38bdf8;
+  --accent-glow: #6c4ef6;
+  --muted: rgba(232, 234, 242, 0.45);
+  --border: rgba(108, 78, 246, 0.25);
+  --card-bg: rgba(255, 255, 255, 0.03);
 }
 
 @theme inline {
   --font-app: var(--font-wotfard);
   --font-sriracha: var(--font-sriracha);
   --font-cartograph: var(--font-cartograph);
+  --font-display: var(--font-syne);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
+}
+
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
 }
 
 .italic,

@@ -3,8 +3,6 @@ import type { HTMLAttributes } from "astro/types";
 import { SOCIALS } from "@/constants";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
-import Logo from "@/assets/logo/devosfera.svg";
-
 const currentYear = new Date().getFullYear();
 const socialHeadingId = "footer-social-heading";
 
@@ -43,13 +41,12 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
           aria-label={`Go to home of ${SITE.title}`}
           class="group footer-home-link relative flex items-center gap-2 rounded-md text-lg font-bold tracking-tight"
         >
-          <Logo class="footer-logo w-28 opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 dark:invert" />
-          <span class="sr-only">{SITE.title}</span>
+          <span class="footer-logo-text opacity-80 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" style="font-family: var(--font-syne, sans-serif); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;">sam.</span>
         </a>
         <p
           class="max-w-xs text-center font-cartograph text-[11px] leading-relaxed tracking-wide text-foreground/55 sm:text-start"
         >
-          A space where curiosity turns into code.
+          Building software. Raising a family. Living in Tallinn.
         </p>
       </div>
 
@@ -98,7 +95,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
         {SITE.title}. All rights reserved.
       </p>
       <p class="font-cartograph text-[11px] tracking-wide text-foreground/45">
-        Made with <span class="text-accent">&#9829;</span> and lots of coffee
+        Built with Astro · Tallinn, Estonia
       </p>
     </div>
   </div>

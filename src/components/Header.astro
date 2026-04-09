@@ -4,7 +4,6 @@ import IconSearch from "@/assets/icons/IconSearch.svg";
 import IconArchive from "@/assets/icons/IconArchive.svg";
 import IconGallery from "@/assets/icons/IconGallery.svg";
 import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
-import Logo from "@/assets/logo/devosfera.svg";
 import LinkButton from "./LinkButton.astro";
 import MobileMenu from "./MobileMenu.astro";
 import IntroAudioCompact from "./IntroAudioCompact.astro";
@@ -49,8 +48,7 @@ const isActive = (path: string) => {
           href="/"
           class="group relative z-20 flex items-center gap-2 text-xl font-bold tracking-tight sm:text-2xl shrink-0"
         >
-          <!-- <span class="nav-logo-text">{SITE.title}</span> -->
-          <Logo class="w-37.5 dark:invert" />
+          <span class="nav-logo-text" style="font-family: var(--font-syne, sans-serif); font-weight: 700;">{SITE.title}</span>
         </a>
 
         <!-- Center Audio Player -->
@@ -205,10 +203,11 @@ const isActive = (path: string) => {
   #main-header {
     background: transparent;
   }
-  
+
   :global(.header-scrolled) {
-    background: color-mix(in srgb, var(--background) 80%, transparent) !important;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    background: rgba(8, 11, 20, 0.75) !important;
+    border-bottom: 1px solid rgba(108, 78, 246, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   }
 
   :global(.header-scrolled .header-scrolled-filter) {
@@ -219,9 +218,8 @@ const isActive = (path: string) => {
   .nav-logo-text {
     background: linear-gradient(
       135deg,
-      var(--foreground) 0%,
-      var(--foreground) 60%,
-      var(--accent) 100%
+      #a78bfa 0%,
+      #38bdf8 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -308,6 +306,23 @@ const isActive = (path: string) => {
     color: var(--accent);
     /* Clean active state for desktop */
     background: transparent;
+  }
+
+  /* Sliding underline for non-active nav links */
+  .nav-link:not(.nav-active)::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0.75rem;
+    right: 0.75rem;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .nav-link:not(.nav-active):hover::after {
+    transform: scaleX(1);
   }
 
   /* Glowing dot for active state (macOS Dock style) */
