@@ -224,9 +224,10 @@ const nextPost =
       <ShareLinks />
     </div>
 
-    {/* Giscus comments — activate by replacing REPO_ID and CATEGORY_ID after setting up GitHub Discussions at https://giscus.app */}
+    {/* Giscus comments — powered by GitHub Discussions on SCastaneda/blog */}
     <section class="giscus-wrapper mt-8">
       <script is:inline
+        src="https://giscus.app/client.js"
         data-repo="SCastaneda/blog"
         data-repo-id="R_kgDOR6XzcA"
         data-category="General"
@@ -236,7 +237,7 @@ const nextPost =
         data-reactions-enabled="1"
         data-emit-metadata="1"
         data-input-position="top"
-        data-theme="dark"
+        data-theme="preferred_color_scheme"
         data-lang="en"
         data-loading="lazy"
         crossorigin="anonymous"  
